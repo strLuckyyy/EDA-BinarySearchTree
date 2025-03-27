@@ -1,5 +1,9 @@
 # Trabalho 1 -  Estrutura de Dados Avançada
-
+<h6>
+    Dupla:
+    <a href="https://github.com/strLuckyyy" target="_blank">Abrahão Francis Gonçalves, </a>
+    <a href="https://github.com/TheGamesModafoca" target="_blank">Lucas Fraga Moraes</a>    
+</h6>
 
 **Contexto**: É inquestionável a aplicação de estruturas do tipo árvore em diversas áreas conforme visto em
 aula. Pensando nisso, você deverá desenvolver alguns métodos baseados na árvore de pesquisa binária
