@@ -28,13 +28,13 @@ if __name__ == "__main__":
             'Achar Altura',
             'Achar Nível',
             'Achar Ancestrais',
-            'Árvore Está Vazia',
+            'Mostrar Árvore',
             'Limpar Árvore'
         ]
 
         lista_menu = '-' * 65 + '\n' + '|' + ' ' * 63 + '|'
-
-
+        
+        
         for i in range(len(opções)):
             if (i+1) % 2 == 0:
                 #if len(opções) < 30:
@@ -159,6 +159,7 @@ if __name__ == "__main__":
                 bst.insert(set_key('inserir'), set_value())
 
                 op_menu = menu(lista_menu)
+
 
             while op_menu == 3:
 
@@ -381,9 +382,9 @@ if __name__ == "__main__":
                 clear()
 
                 if bst.is_empty() == False:
-
-                    print('A árvore não está vazia')
-
+                    
+                    print(bst)
+                    
                     wait()
 
                 else:

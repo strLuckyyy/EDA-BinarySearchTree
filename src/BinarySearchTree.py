@@ -117,86 +117,108 @@ class BinarySearchTree(BinarySearchTreeADT):
 
 
 # Métodos para desenvolver
-    
+    # Este método deve retornar o número de nós internos da árvore
     def count_internal(self) -> int:
         def count_internal(current: Node) -> int:
-            if current is None: return 0   
-            count = 0
-        
+            if current is None: 
+                return 0 # Caso o nodo atual seja nulo, retorna 0   
+            
+            count = 0 # Contador de nós filhos, inicializa em 0 e se tiver filho na esquerda ou direita, soma 1
             if current.left: count += 1
             if current.right: count += 1
-                
+            
+            # Recursão para garantir que percorre toda a árvore
             return count + count_internal(current.left) + count_internal(current.right)
         
         return count_internal(self._root)
 
 
+    # Este método deve retornar o grau de um nó da árvore
     def degree(self, key: object) -> int: 
-        def degree(current: Node, key: object) -> int:            
-            if current is None: return None
+        def degree(current: Node, key: object) -> int: # Função recursiva para calcular o grau do nó         
+            if current is None: return -1 # Caso o nodo seja nulo, retorna -1
             
-            if key == current.key:
-                if current.left and current.right:
+            if key == current.key: # Se o nó for encontrado, verifica o grau. 
+                # Se o nó tiver filhos à esquerda e à direita, retorna 2
+                if current.left and current.right: 
                     return 2
-                elif (current.left and not current.right) or (current.right and not current.left):
-                    return 1
-                else:
-                    return 0
                 
+                # Se o nó tiver apenas um filho (à esquerda ou à direita), retorna 1
+                elif (current.left and not current.right) or (current.right and not current.left): 
+                    return 1
+                
+                else: # Se o nó não tiver filhos, retorna 0
+                    return 0
+            
+            # Se o nó não for encontrado, continua a busca na subárvore esquerda ou direita
             return degree(current.next(key), key)
-        
-        if key is None: return -1
         
         return degree(self._root, key)
 
 
+    # Este método deve retornar a altura de um nó da árvore
     def height(self, key: object) -> int:
-        def _height(current: Node) -> int:
+        def _height(current: Node) -> int: # Função recursiva para retornar a altura do nó
             if current is None:
-                return -1
+                return -1 # Caso o nó seja nulo, retorna -1
+            
+            # Retorna a altura do nó especificado, verificando o maior entre a altura da subárvore esquerda e direita
+            # Adiciona 1 para contar o nó atual
             return 1 + max(_height(current.left), _height(current.right))
         
-        def find_node(current: Node, key: object) -> Node:
+        # Função que pesquisa o nodo pela arvore e retorna-o.
+        # Funciona como o search() mas retornando apenas o current ao invés do current.value ou None 
+        def find_node(current: Node, key: object) -> Node:      
             if current is None or key == current.key:
                 return current
             if key < current.key:
                 return find_node(current.left, key)
             else:
                 return find_node(current.right, key)
+    
+        target_node = find_node(self._root, key)     
         
-        target_node = find_node(self._root, key)
-        if target_node is None:
-            return -1  # Nó não encontrado
-        
+        if target_node is None: # Se o nodo não for encontrado, retorna -1
+            return -1
+    
         return _height(target_node)
             
 
-    def level(self, key: object) -> int: 
+    # Este método deve informar qual o nível de um nodo
+    def level(self, key: object) -> int:
         def level(current: Node, key: object, current_level: int) -> int:
-            if current is None:
+            if current is None: # Se o nodo for None, retorna -1
                 return -1
-            if key == current.key:
+            if key == current.key: # Caso encontre o Nodo
                 return current_level
+            
+            # Caso não encontre, verifica o filho esquerdo do nodo(caso exista)
             left_level = level(current.left, key, current_level + 1)
             if left_level != -1:
                 return left_level
+            
+            # Caso contrario verifica o filho direito do nodo (caso exista)
             return level(current.right, key, current_level + 1)
         
         return level(self._root, key, 0)
 
 
+    # Este método deve informar os ancestrais do Nodo especificado. 
+    # Seu retorno é baseado em tupla, a decisão foi feita para facilitar a "montagem" da string
     def ancestor(self, key: object) -> str:
         def find_ancestors(current: Node, key: object) -> tuple:
-            if current is None:
+            if current is None: # Caso o Nodo seja nulo, ele retorna falso
                 return (False, "")
             
-            if key == current.key:
+            if key == current.key: # Caso o Nodo seja encontrado, retorna true. 
                 return (True, "")
             
+            # Verificando a parte esquerda da arvore
             left_found, left_ancestors = find_ancestors(current.left, key)
             if left_found:
                 return (True, f"{current.key} {left_ancestors}")
             
+            # Verificando a parte direita da arvore
             right_found, right_ancestors = find_ancestors(current.right, key)
             if right_found:
                 return (True, f"{current.key} {right_ancestors}")
