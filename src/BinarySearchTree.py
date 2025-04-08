@@ -1,5 +1,5 @@
-import BinarySearchTreeADT
-import Node
+from BinarySearchTreeADT import BinarySearchTreeADT
+from Node import Node
 
 class BinarySearchTree(BinarySearchTreeADT):
     def __init__(self) -> None:
@@ -115,26 +115,96 @@ class BinarySearchTree(BinarySearchTreeADT):
                 if current.left: queue.append(current.left)
                 if current.right: queue.append(current.right)
 
-    # Métodos para desenvolver
+
+# Métodos para desenvolver
     
     def count_internal(self) -> int:
-        pass
+        def count_internal(current: Node) -> int:
+            if current is None: return 0   
+            count = 0
+        
+            if current.left: count += 1
+            if current.right: count += 1
+                
+            return count + count_internal(current.left) + count_internal(current.right)
+        
+        return count_internal(self._root)
 
 
     def degree(self, key: object) -> int: 
-        pass
+        def degree(current: Node, key: object) -> int:            
+            if current is None: return None
+            
+            if key == current.key:
+                if current.left and current.right:
+                    return 2
+                elif (current.left and not current.right) or (current.right and not current.left):
+                    return 1
+                else:
+                    return 0
+                
+            return degree(current.next(key), key)
+        
+        if key is None: return -1
+        
+        return degree(self._root, key)
 
 
-    def height(self, key: object) -> int: 
-        pass
-
+    def height(self, key: object) -> int:
+        def _height(current: Node) -> int:
+            if current is None:
+                return -1
+            return 1 + max(_height(current.left), _height(current.right))
+        
+        def find_node(current: Node, key: object) -> Node:
+            if current is None or key == current.key:
+                return current
+            if key < current.key:
+                return find_node(current.left, key)
+            else:
+                return find_node(current.right, key)
+        
+        target_node = find_node(self._root, key)
+        if target_node is None:
+            return -1  # Nó não encontrado
+        
+        return _height(target_node)
+            
 
     def level(self, key: object) -> int: 
-        pass
+        def level(current: Node, key: object, current_level: int) -> int:
+            if current is None:
+                return -1
+            if key == current.key:
+                return current_level
+            left_level = level(current.left, key, current_level + 1)
+            if left_level != -1:
+                return left_level
+            return level(current.right, key, current_level + 1)
+        
+        return level(self._root, key, 0)
 
 
-    def ancestor(self, key: object) -> str: 
-        pass
+    def ancestor(self, key: object) -> str:
+        def find_ancestors(current: Node, key: object) -> tuple:
+            if current is None:
+                return (False, "")
+            
+            if key == current.key:
+                return (True, "")
+            
+            left_found, left_ancestors = find_ancestors(current.left, key)
+            if left_found:
+                return (True, f"{current.key} {left_ancestors}")
+            
+            right_found, right_ancestors = find_ancestors(current.right, key)
+            if right_found:
+                return (True, f"{current.key} {right_ancestors}")
+            
+            return (False, "")
+        
+        found, ancestors = find_ancestors(self._root, key)
+        return ancestors.strip() if found else None
     
     
     def _delete_by_copying(self, key: object) -> bool:

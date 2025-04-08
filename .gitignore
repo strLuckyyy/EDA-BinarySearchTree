@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode
 
 ### Python ###
+#test file
+teste.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

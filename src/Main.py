@@ -1,5 +1,4 @@
-import BinarySearchTree
-import Node
+from BinarySearchTree import BinarySearchTree
 
 
 if __name__ == "__main__":
