@@ -79,6 +79,7 @@ if __name__ == "__main__":
 
 
     def menu(ops):
+
         clear()
 
         print('\tEscolha uma opção digitando o número da opção desejada\n')
@@ -88,21 +89,30 @@ if __name__ == "__main__":
         o = (input())
 
         if o.isnumeric() == False:
-            print('\nDigite um número presente na lista\n')
-            wait()
-            return 0
-        else:
-            return int(o)
+                
+                print('\nDigite um número presente na lista\n')
+
+                wait()
+
+                return 0
+        
+        if 0 >= int(o) or int(o) > 14:
+                
+                print('\nDigite um número presente na lista\n')
+
+                wait()
+
+                return 0
+        
+        return int(o)
 
 
     def main():
 
         bst = BinarySearchTree()
-        current = Node
-
-        
-
+      
         clear()
+
         op_menu = 0
 
         lista_menu = montar_menu()
@@ -285,8 +295,7 @@ if __name__ == "__main__":
                     wait()
 
                 op_menu = menu(lista_menu)
-
-            
+    
             while op_menu == 10:
 
                 clear()
@@ -313,7 +322,6 @@ if __name__ == "__main__":
                     wait()
 
                 op_menu = menu(lista_menu)
-
 
             while op_menu == 11:
 
@@ -405,17 +413,6 @@ if __name__ == "__main__":
                     wait()
 
                 op_menu = menu(lista_menu)
-
-        if 0 > op_menu > 14:
-
-            op_menu = 0
-
-
-
-
-
-
-
 
 
     main()
