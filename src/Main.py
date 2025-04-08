@@ -37,14 +37,13 @@ if __name__ == "__main__":
         
         for i in range(len(opções)):
             if (i+1) % 2 == 0:
-                #if len(opções) < 30:
-                #    opções[i] += (' ') * (30-len(opções))
-                #lista_menu += str(f'\t(                              )\n')
+                
                 lista_menu += f'{i+1} - {opções[i]}\t|\n|'
+
                 lista_menu += ' ' *63 + '|'
             else:
                 opções[i] += (' ') * (15-len(opções[i]))
-                #lista_menu += str(f'\n(                              )\t|')
+
                 lista_menu += f'\n|\t{i+1} - {opções[i]}\t|\t'
         
         lista_menu += '\n'+ '-' * 65
